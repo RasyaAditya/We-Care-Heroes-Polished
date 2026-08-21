@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>We Care Heroes — iPhone Mockup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --container:#eceef2;
+    --surface:#ffffff;
+    --surface-hi:#f5f6f9;
+    --border:rgba(0,0,0,0.09);
+    --border-strong:rgba(0,0,0,0.16);
+    --text:#1c1c1e;
+    --text-dim:#6e7075;
+    --text-faint:#a1a3aa;
+    --axa-red:#ff1721;
+    --axa-red-dim:#c8101a;
+    --navy:#00008f;
+    --ice:#2f6fe0;
+    --ice-dim:#1550c4;
+    --money:#159a5c;
+    --money-dim:rgba(21,154,92,0.10);
+    --gold:#e8a324;
+    --gold-dim:#b9800f;
+    --gold-bg:rgba(232,163,36,0.14);
+    --radius-lg:22px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --accent-a:#00008f;
+    --accent-b:#ff1721;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    position:relative;
+    margin:0;
+    min-height:100dvh;
+    display:flex;align-items:center;justify-content:center;
+    padding:32px 16px;
+    font-family:'Work Sans',system-ui,sans-serif;
+    color:var(--text);
+    background:#eef0f4;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(760px 520px at 10% -6%, rgba(0,0,143,0.16), transparent 60%),
+      radial-gradient(680px 480px at 96% 8%, rgba(255,23,33,0.11), transparent 62%),
+      radial-gradient(900px 620px at 50% 108%, rgba(0,0,143,0.10), transparent 60%),
+      linear-gradient(180deg, #f4f5f8, #e7e9ee 55%, #dfe2e8);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:radial-gradient(rgba(28,28,30,0.09) 1px, transparent 1.4px);
+    background-size:15px 15px;
+    -webkit-mask-image:radial-gradient(760px 620px at 50% 30%, #000, transparent 78%);
+            mask-image:radial-gradient(760px 620px at 50% 30%, #000, transparent 78%);
+  }
+
+  /* ===== responsive app container (no phone frame) ===== */
+  /* height tracks the device viewport, so the tab bar always sits pinned to the bottom */
+  .phone{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:460px;
+    height:min(860px, calc(100dvh - 64px));
+    margin:0 auto;
+  }
+
+  .phone-screen{
+    position:relative;width:100%;height:100%;
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:
+      0 40px 80px -30px rgba(0,0,0,0.22),
+      0 16px 34px -16px rgba(0,0,0,0.16);
+  }
+
+  .app-scroll{
+    flex:1;min-height:0;overflow-y:auto;background:var(--surface);
+    padding:14px 14px 28px;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  @media (max-width:480px){
+    body{padding:0;display:block;}
+    .phone{max-width:100%;height:100dvh;}
+    .phone-screen{border-radius:0;}
+    .app-scroll{padding:10px 10px 22px;}
+  }
+
+  /* ===== app card ===== */
+  @keyframes modalEnter{
+    0%{opacity:0;transform:translateY(18px) scale(.98);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+  }
+  .modal{
+    width:100%;
+    background:var(--container);
+    border-radius:var(--radius-lg);
+    box-shadow:0 10px 30px -14px rgba(0,0,0,0.12);
+    overflow:hidden;
+    animation:modalEnter .5s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .give-subhead{
+    display:flex;align-items:flex-start;gap:10px;padding:18px 20px 12px;
+  }
+  .give-subhead .head-tag{
+    display:flex;flex-direction:column;gap:3px;line-height:1.4;
+    flex:1;min-width:0;
+  }
+  .give-subhead .head-tag-brand{
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--navy);display:block;
+  }
+  .give-subhead .head-tag b{color:var(--text);font-weight:700;}
+  .give-subhead .head-tag-sub{
+    font-family:'Work Sans',sans-serif;font-size:8px;font-weight:500;color:var(--text);
+    display:block;
+  }
+
+  /* header */
+  .head{padding:20px 20px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .head-title{display:flex;align-items:center;gap:11px;}
+
+  @keyframes logoDrop{
+    0%{opacity:0;transform:translateY(-8px) scale(.82) rotate(-6deg);}
+    60%{opacity:1;transform:translateY(1px) scale(1.04) rotate(1deg);}
+    100%{opacity:1;transform:translateY(0) scale(1) rotate(0deg);}
+  }
+  .axa-logo{
+    flex:none;position:relative;width:50px;height:50px;border-radius:9px;overflow:hidden;
+    box-shadow:0 6px 16px -4px rgba(0,0,143,0.45), inset 0 0 0 1px rgba(255,255,255,0.14);
+    animation:logoDrop .6s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .axa-logo img{position:relative;z-index:1;display:block;width:100%;height:100%;object-fit:cover;}
+  .axa-logo::after{
+    content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform:skewX(-20deg);z-index:2;pointer-events:none;
+    animation:logoShine 3.4s ease-in-out infinite;
+    animation-delay:1.1s;
+  }
+  @keyframes logoShine{
+    0%{left:-60%;}
+    35%{left:130%;}
+    100%{left:130%;}
+  }
+
+  .head h1{
+    font-family:'Fraunces',serif;font-size:19px;font-weight:700;margin:0;letter-spacing:-0.01em;
+    display:flex;gap:6px;flex-wrap:wrap;color:var(--text);
+  }
+  .head h1 span{display:inline-block;opacity:0;animation:wordIn .5s ease forwards;}
+  .head h1 span:nth-child(1){animation-delay:.15s;}
+  .head h1 span:nth-child(2){animation-delay:.28s;}
+  .head h1 span:nth-child(3){animation-delay:.41s;color:var(--axa-red);}
+  @keyframes wordIn{
+    from{opacity:0;transform:translateY(6px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .head p{margin:3px 0 0;font-size:11.5px;color:var(--text-dim);}
+  .head-tag{
+    font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--text-faint);margin-top:6px;display:flex;align-items:center;gap:5px;
+  }
+  .head-tag b{color:var(--navy);font-weight:700;}
+  .closebtn{
+    width:30px;height:30px;border-radius:9px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text-dim);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:14px;transition:.15s;flex:none;
+  }
+  .closebtn:hover{background:var(--surface-hi);color:var(--text);transform:rotate(90deg);}
+
+  .field-block{padding:0 20px 16px;}
+  label.section-label{
+    display:flex;align-items:center;gap:6px;
+    font-family:'Space Mono',monospace;
+    font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--text);margin-bottom:8px;
+  }
+  label.section-label::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--axa-red);flex:none;}
+
+  input[type=text]{
+    width:100%;padding:11px 13px;border-radius:var(--radius-sm);
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text);font-size:14px;font-family:'Work Sans',sans-serif;outline:none;transition:.15s;
+  }
+  input[type=text]:focus{border-color:var(--axa-red);box-shadow:0 0 0 3px rgba(255,23,33,0.14);}
+  input[type=text]::placeholder{color:var(--text-faint);}
+
+  .segmented{display:flex;gap:8px;}
+  .seg-btn{
+    padding:8px 15px;border-radius:999px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text-dim);font-size:13px;font-weight:600;
+    cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .seg-btn.active{border-color:var(--ice);color:var(--text);box-shadow:0 0 0 1px var(--ice);}
+  .seg-btn:not(.active):hover{background:var(--surface-hi);}
+
+  .perforation{padding:2px 20px 16px;}
+  .perforation .line{display:block;height:1px;background:var(--border);}
+  .perforation .dot{display:none;}
+
+  .chiprow-wrap{display:flex;align-items:center;gap:6px;}
+  .chiprow{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
+  .chiprow::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:none;display:flex;align-items:center;gap:6px;
+    padding:9px 13px;border-radius:999px;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text);font-size:12.5px;font-weight:600;
+    cursor:pointer;white-space:nowrap;transition:.15s;
+  }
+  .chip.active{background:linear-gradient(135deg,var(--axa-red),var(--axa-red-dim));border-color:transparent;color:#fff;box-shadow:0 4px 14px -4px rgba(255,23,33,0.5);}
+  .chip:not(.active):hover{background:var(--surface-hi);transform:translateY(-1px);}
+  .chevron{
+    flex:none;width:24px;height:24px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text-dim);display:flex;align-items:center;justify-content:center;
+    font-size:12px;cursor:pointer;
+  }
+
+  textarea{
+    width:100%;min-height:58px;padding:12px 13px;border-radius:var(--radius-sm);
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text);font-size:14px;font-family:'Work Sans',sans-serif;resize:none;outline:none;
+  }
+  textarea:focus{border-color:var(--axa-red);box-shadow:0 0 0 3px rgba(255,23,33,0.14);}
+  .charcount{text-align:right;font-family:'Space Mono',monospace;font-size:10px;color:var(--text-faint);margin-top:5px;}
+
+  @keyframes stickerPop{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.22) rotate(-6deg);}
+    70%{transform:scale(.94) rotate(3deg);}
+    100%{transform:scale(1) rotate(0);}
+  }
+  .sticker-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;}
+  .sticker-row::-webkit-scrollbar{display:none;}
+  .sticker{
+    flex:none;width:46px;height:46px;border-radius:var(--radius-sm);
+    background:var(--surface);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:21px;
+    cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s;
+  }
+  .sticker:hover{background:var(--surface-hi);}
+  .sticker.active{border-color:var(--axa-red);box-shadow:0 0 0 2px rgba(255,23,33,0.3);background:rgba(255,23,33,0.08);}
+  .sticker.pop{animation:stickerPop .4s ease;}
+
+  .photo-zone{
+    border:1.5px dashed var(--border-strong);border-radius:var(--radius-md);
+    padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:.15s;
+    background:var(--surface);
+  }
+  .photo-zone:hover{border-color:var(--ice);background:var(--surface-hi);}
+  .photo-zone.has-image{border-style:solid;}
+  .photo-icon{
+    width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--ice),var(--ice-dim));
+    display:flex;align-items:center;justify-content:center;flex:none;font-size:16px;
+  }
+  .photo-text strong{display:block;font-size:12.5px;font-weight:600;color:var(--text);}
+  .photo-text span{font-size:10.5px;color:var(--text-faint);}
+  .photo-preview{width:40px;height:40px;border-radius:9px;object-fit:cover;flex:none;
+    animation:popIn .35s ease;}
+  @keyframes popIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+  .photo-remove{
+    margin-left:auto;font-size:10.5px;color:var(--axa-red);font-weight:700;
+    background:none;border:none;cursor:pointer;font-family:inherit;
+  }
+
+  .envelope-outer{perspective:700px;}
+  .money-box{
+    position:relative;margin-top:18px;padding:30px 15px 15px;border-radius:var(--radius-md);
+    background:var(--surface);border:1px solid var(--border);overflow:visible;
+    transition:border-color .3s, background .3s;
+  }
+  .money-box.open{border-color:rgba(21,154,92,0.4);background:var(--money-dim);}
+  .envelope-flap{
+    position:absolute;top:-1px;left:0;right:0;height:32px;
+    background:linear-gradient(135deg,var(--accent-a) 0%,var(--accent-b) 100%);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;transform-style:preserve-3d;backface-visibility:hidden;
+    transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s, background .4s;
+    border-radius:14px 14px 0 0;
+  }
+  .money-box.open .envelope-flap{transform:rotateX(178deg) translateY(-2px);opacity:.16;}
+  .wax-seal{
+    position:absolute;top:18px;left:50%;transform:translate(-50%,0);
+    width:20px;height:20px;border-radius:50%;background:var(--navy);
+    border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:#fff;transition:opacity .3s,transform .3s;z-index:2;
+  }
+  .money-box.open .wax-seal{opacity:0;transform:translate(-50%,-6px) scale(.6);}
+  .money-top{display:flex;align-items:center;justify-content:space-between;}
+  .money-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text);}
+  .money-title span.label{display:flex;flex-direction:column;line-height:1.25;}
+  .money-title small{font-family:'Space Mono',monospace;font-size:9.5px;font-weight:400;color:var(--text-faint);}
+  .switch{position:relative;width:38px;height:22px;flex:none;}
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{position:absolute;inset:0;background:var(--container);border:1px solid var(--border-strong);border-radius:999px;cursor:pointer;transition:.2s;}
+  .slider:before{content:"";position:absolute;height:16px;width:16px;left:2px;top:2px;background:#fff;border:1px solid var(--border);border-radius:50%;transition:.2s;}
+  .switch input:checked + .slider{background:var(--money);border-color:var(--money);}
+  .switch input:checked + .slider:before{transform:translateX(16px);border-color:transparent;}
+
+  .money-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .money-body.open{max-height:190px;margin-top:13px;}
+  .balance-row{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:10.5px;color:var(--text-dim);margin-bottom:8px;}
+  .balance-row b{color:var(--text);font-weight:700;}
+  .amount-input-wrap{position:relative;}
+  .amount-prefix{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:14px;color:var(--text-dim);font-weight:700;}
+  input.amount-input{
+    width:100%;padding:11px 13px 11px 30px;border-radius:var(--radius-sm);
+    background:var(--container);border:1px solid var(--border);
+    color:var(--text);font-size:15px;font-family:'Space Mono',monospace;outline:none;font-weight:700;
+  }
+  input.amount-input:focus{border-color:var(--money);box-shadow:0 0 0 3px rgba(21,154,92,0.14);}
+  .quick-amounts{display:flex;gap:6px;margin-top:8px;}
+  .quick-amt{
+    flex:1;padding:6px;border-radius:8px;background:var(--container);border:1px solid var(--border);
+    color:var(--text-dim);font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;cursor:pointer;text-align:center;transition:.15s;
+  }
+  .quick-amt:hover{border-color:var(--money);color:var(--text);}
+  .money-error{font-size:10.5px;color:var(--axa-red);margin-top:6px;display:none;}
+
+  /* ticket preview */
+  .ticket-wrap{padding:20px 20px 4px;}
+  .ticket-outer-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+  .ticket-outer-label label.section-label{margin-bottom:0;}
+  .ticket-hint{font-size:10px;color:var(--text-faint);}
+
+  .ticket{
+    position:relative;
+    background:linear-gradient(150deg, var(--accent-a), var(--accent-b));
+    color:#fff;
+    border-radius:18px;
+    padding:18px 18px 15px;
+    box-shadow:0 18px 36px -18px rgba(0,0,0,0.4);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background .45s;
+  }
+  .ticket:hover{transform:translateY(-3px);box-shadow:0 24px 44px -18px rgba(0,0,0,0.45);}
+  .ticket-vignette{
+    position:absolute;inset:0;border-radius:18px;pointer-events:none;
+    background:linear-gradient(150deg, rgba(255,255,255,0.14), transparent 45%);
+  }
+  .ticket-flash{outline:2px solid rgba(255,255,255,0.7);outline-offset:2px;}
+
+  .ticket-badges{display:flex;align-items:center;gap:8px;flex:none;}
+  .ticket-ribbon{
+    width:26px;height:26px;border-radius:50%;flex:none;
+    background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;color:#fff;
+    transition:background .4s;
+  }
+
+  .ticket-eyebrow{
+    font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(255,255,255,0.7);display:flex;justify-content:space-between;margin-bottom:9px;position:relative;z-index:2;
+  }
+  .ticket-eyebrow .brand{display:flex;align-items:center;gap:5px;}
+  .ticket-eyebrow .brand .swoosh{width:10px;height:2px;background:rgba(255,255,255,0.85);display:inline-block;transform:rotate(-35deg);}
+  .ticket-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;position:relative;z-index:2;}
+  .ticket-from-to strong{font-family:'Fraunces',serif;font-size:15px;font-weight:600;display:block;color:#fff;}
+  .ticket-from-to span{font-size:11px;color:rgba(255,255,255,0.72);}
+  .ticket-stamp{
+    flex:none;width:42px;height:42px;border-radius:50%;
+    border:1px solid rgba(255,255,255,0.35);
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+    background:rgba(255,255,255,0.14);transition:background .3s;
+  }
+  .ticket-stamp.pop{animation:stickerPop .4s ease;}
+  .ticket-title-line{
+    font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin:11px 0 4px;color:#fff;
+    display:flex;align-items:center;gap:8px;position:relative;z-index:2;
+  }
+  .ticket-note{font-size:12px;line-height:1.5;color:rgba(255,255,255,0.82);margin-bottom:4px;position:relative;z-index:2;}
+  .ticket-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;position:relative;z-index:2;}
+  @keyframes tagIn{
+    0%{opacity:0;transform:translateY(6px) scale(.9);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+  }
+  .ticket-tag{
+    display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;
+    padding:5px 10px;border-radius:999px;background:rgba(255,255,255,0.16);
+    border:1px solid rgba(255,255,255,0.3);color:#fff;
+    animation:tagIn .3s ease;
+  }
+  .ticket-tag.accented{border-color:rgba(255,255,255,0.55);color:#fff;background:rgba(255,255,255,0.22);transition:border-color .4s, color .4s, background .4s;}
+  .ticket-tag.money{background:rgba(255,255,255,0.92);border-color:transparent;color:#0f6b40;}
+  .ticket-photo{width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid rgba(255,255,255,0.35);animation:tagIn .3s ease;}
+  .ticket-empty{font-size:11px;color:rgba(255,255,255,0.65);font-style:italic;}
+
+  .ticket-divider{border:none;border-top:1px solid rgba(255,255,255,0.25);margin:13px 0 9px;position:relative;z-index:2;}
+  .ticket-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;position:relative;z-index:2;}
+  .ticket-barcode{display:flex;gap:2px;align-items:flex-end;height:24px;}
+  .ticket-barcode span{flex:none;background:#fff;opacity:.75;}
+  .ticket-code{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:rgba(255,255,255,0.7);text-align:right;}
+  .ticket-code b{display:block;color:#fff;font-size:10.5px;}
+
+  .bg-block{padding:18px 20px 4px;}
+  .swatches{display:flex;gap:9px;flex-wrap:wrap;}
+  .swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;position:relative;transition:transform .15s;}
+  .swatch:hover{transform:translateY(-2px) scale(1.06);}
+  .swatch.selected{border-color:var(--text);box-shadow:0 0 0 2px var(--accent-b);}
+  .swatch-label{
+    margin-top:9px;font-family:'Space Mono',monospace;font-size:10.5px;color:var(--text-dim);
+    display:flex;align-items:center;gap:6px;
+  }
+  .swatch-label .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));flex:none;transition:background .4s;}
+
+  .footer{padding:18px 20px 20px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);margin-top:18px;flex-wrap:wrap;gap:10px;}
+  .helpful{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--text-dim);}
+  .helpful button{padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);font-size:11.5px;cursor:pointer;font-family:inherit;}
+  .helpful button.picked{border-color:var(--axa-red);color:var(--text);}
+  .footer-actions{display:flex;gap:8px;}
+  .btn{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:.15s;}
+  .btn.primary{
+    background:linear-gradient(135deg,var(--axa-red),var(--axa-red-dim));border:none;color:#fff;
+    box-shadow:0 8px 18px -6px rgba(255,23,33,0.45);
+    animation:btnGlow 2.6s ease-in-out infinite;
+  }
+  @keyframes btnGlow{
+    0%,100%{box-shadow:0 8px 18px -6px rgba(255,23,33,0.45);}
+    50%{box-shadow:0 8px 24px -4px rgba(255,23,33,0.7);}
+  }
+  .btn.primary:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;animation:none;}
+  .btn:hover:not(:disabled){filter:brightness(0.97);transform:translateY(-1px);}
+
+  .hidden-input{display:none;}
+
+  @keyframes toastIn{
+    0%{opacity:0;transform:translateX(-50%) translateY(24px) scale(.95);}
+    60%{transform:translateX(-50%) translateY(-3px) scale(1.02);}
+    100%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}
+  }
+  .toast{
+    position:absolute;bottom:34px;left:50%;
+    background:#1c1c1e;border:1px solid rgba(255,255,255,0.12);color:#fff;
+    padding:11px 16px;border-radius:12px;font-size:12.5px;display:flex;align-items:center;gap:9px;
+    opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px);
+    box-shadow:0 20px 40px -10px rgba(0,0,0,0.4);z-index:50;white-space:nowrap;
+  }
+  .toast.show{opacity:1;pointer-events:auto;animation:toastIn .4s cubic-bezier(.2,.8,.2,1) forwards;}
+  .toast .dot{width:7px;height:7px;border-radius:50%;background:var(--money);flex:none;}
+
+  .confetti-piece{
+    position:absolute;top:0;left:0;width:7px;height:7px;pointer-events:none;z-index:60;border-radius:1px;
+  }
+
+  /* ===== app shell: top bar, pages, bottom tabs ===== */
+  .app-topbar{
+    flex:none;display:none;align-items:center;justify-content:space-between;
+    padding:16px 20px;background:var(--surface);color:var(--text);
+    position:relative;overflow:hidden;border-bottom:1px solid var(--border);
+    box-shadow:0 1px 0 0 var(--border);
+  }
+  .app-topbar::after{
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;
+    background:linear-gradient(90deg,var(--navy),var(--axa-red));
+    pointer-events:none;
+  }
+  .app-topbar.show{display:flex;}
+  .app-topbar h2{
+    font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin:0;letter-spacing:-0.01em;
+    position:relative;z-index:1;color:var(--text);
+  }
+  .appbar-pill{
+    flex:none;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.03em;
+    padding:5px 11px;border-radius:999px;background:var(--gold);color:#2b1c00;
+    position:relative;z-index:1;display:flex;align-items:center;gap:5px;
+  }
+  .appbar-pill.live{background:var(--money-dim);color:var(--money);border:1px solid rgba(21,154,92,0.35);}
+  .appbar-pill .live-dot{width:6px;height:6px;border-radius:50%;background:var(--money);animation:liveDot 1.6s ease-in-out infinite;}
+  @keyframes liveDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(21,154,92,.5);}50%{opacity:.55;box-shadow:0 0 0 4px rgba(21,154,92,0);}}
+
+  .page{display:none;}
+  .page.active{display:block;animation:modalEnter .45s cubic-bezier(.2,.8,.2,1) both;}
+
+  .page-pad{padding:20px 20px 22px;}
+  .page-pad + .page-pad{padding-top:0;}
+
+  .tabbar{
+    flex:none;display:flex;gap:2px;background:var(--surface);
+    border-top:1px solid var(--border);padding:7px 6px calc(7px + env(safe-area-inset-bottom,0px));
+    position:relative;z-index:5;
+  }
+  .tab-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:6px 2px;background:none;border:none;border-radius:11px;cursor:pointer;
+    color:var(--text-faint);font-family:'Work Sans',sans-serif;font-size:9.5px;font-weight:600;
+    transition:color .15s, background .15s, transform .15s;
+  }
+  .tab-btn .tab-icon{font-size:17px;line-height:1;transition:transform .2s cubic-bezier(.3,1.4,.5,1);}
+  .tab-btn:hover{background:var(--surface-hi);color:var(--text-dim);}
+  .tab-btn.active{color:var(--axa-red);}
+  .tab-btn.active .tab-icon{transform:translateY(-2px) scale(1.08);}
+
+  /* ---- Rewarded hero ---- */
+  @keyframes starPulse{
+    0%,100%{transform:scale(1) rotate(0deg);}
+    50%{transform:scale(1.06) rotate(-3deg);}
+  }
+  .rewarded-hero{
+    position:relative;overflow:hidden;border-radius:var(--radius-md);
+    background:linear-gradient(160deg,var(--navy),#000066);color:#fff;
+    padding:26px 20px 20px;text-align:center;margin:0 0 14px;
+  }
+  .rewarded-hero .spark{position:absolute;border-radius:50%;opacity:.8;}
+  .rewarded-star{
+    width:60px;height:60px;margin:0 auto 12px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+    display:flex;align-items:center;justify-content:center;font-size:28px;
+    box-shadow:0 10px 26px -8px rgba(232,163,36,0.7);
+    animation:starPulse 2.2s ease-in-out infinite;
+  }
+  .rewarded-hero h3{font-family:'Fraunces',serif;font-size:19px;margin:0 0 4px;font-weight:700;}
+  .rewarded-hero p{margin:0 0 14px;font-size:12px;color:rgba(255,255,255,0.75);}
+  .rewarded-points{
+    display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border-radius:999px;
+    background:var(--gold);color:#2b1c00;font-weight:700;font-size:12.5px;
+  }
+  .rewarded-quote{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:13px 14px;font-size:12.5px;font-style:italic;color:var(--text-dim);line-height:1.5;margin-bottom:14px;
+  }
+  .rewarded-cta{
+    width:100%;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border-strong);
+    background:var(--surface);color:var(--text);font-weight:700;font-size:13px;cursor:pointer;
+    font-family:inherit;transition:.15s;
+  }
+  .rewarded-cta:hover{background:var(--surface-hi);transform:translateY(-1px);}
+
+  /* ---- Impact / stats ---- */
+  .streak-banner{
+    display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:var(--radius-sm);
+    background:var(--gold-bg);border:1px solid rgba(232,163,36,0.35);color:var(--gold-dim);
+    font-weight:700;font-size:12.5px;margin-bottom:14px;
+  }
+  .streak-banner .flame{font-size:16px;flex:none;}
+  .stat-grid{display:flex;gap:10px;margin-bottom:16px;}
+  .stat-card{
+    flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:13px 14px;text-align:center;
+  }
+  .stat-card .num{font-family:'Fraunces',serif;font-size:24px;font-weight:700;display:block;color:var(--axa-red);}
+  .stat-card.received .num{color:var(--money);}
+  .stat-card .lbl{font-size:10.5px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+  .badge-icon{
+    width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-size:19px;color:#fff;box-shadow:0 6px 14px -6px rgba(0,0,0,0.35);
+  }
+  .badge-icon:nth-child(1){background:linear-gradient(135deg,#2b2b30,#000);}
+  .badge-icon:nth-child(2){background:linear-gradient(135deg,#7b5cff,#4c2fc9);}
+  .badge-icon:nth-child(3){background:linear-gradient(135deg,var(--ice),#0f9e8e);}
+  .badge-icon:nth-child(4){background:linear-gradient(135deg,var(--navy),#000);}
+
+  .progress-track{width:100%;height:9px;border-radius:999px;background:var(--container);overflow:hidden;}
+  .progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--ice),#0f9e8e);transition:width .6s cubic-bezier(.2,.8,.2,1);}
+  .progress-caption{font-size:10.5px;color:var(--text-faint);margin-top:7px;font-style:italic;}
+
+  /* ---- Leaderboard ---- */
+  .leader-row{
+    display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--radius-sm);
+    background:var(--surface);border:1px solid var(--border);margin-bottom:8px;transition:.15s;
+  }
+  .leader-row:hover{transform:translateX(2px);border-color:var(--border-strong);}
+  .leader-row.top{background:var(--gold-bg);border-color:rgba(232,163,36,0.4);}
+  .leader-rank{
+    flex:none;width:26px;height:26px;border-radius:50%;background:var(--container);
+    display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:var(--text-dim);
+  }
+  .leader-rank.gold{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:#2b1c00;font-size:13px;}
+  .leader-dept{flex:1;font-weight:600;font-size:13.5px;color:var(--text);}
+  .leader-pts{font-family:'Space Mono',monospace;font-weight:700;font-size:13px;color:var(--text);}
+  .leader-cta{
+    display:block;width:100%;text-align:center;margin-top:6px;padding:12px;border-radius:var(--radius-sm);
+    border:none;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;color:#fff;
+    background:linear-gradient(135deg,var(--navy),#4c2fc9);box-shadow:0 8px 18px -8px rgba(76,47,201,0.55);
+    transition:.15s;
+  }
+  .leader-cta:hover{transform:translateY(-1px);filter:brightness(1.05);}
+
+  .leader-avatar{
+    flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11.5px;font-weight:700;color:#fff;
+  }
+  .leader-person{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}
+  .leader-name{font-weight:600;font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .leader-sub{font-size:10.5px;color:var(--text-faint);}
+
+  /* ---- Missions ---- */
+  .mission-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+    padding:16px;margin-bottom:14px;
+  }
+  .mission-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .mission-icon{
+    flex:none;width:38px;height:38px;border-radius:10px;
+    background:linear-gradient(135deg,var(--ice),#0f9e8e);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .mission-head strong{display:block;font-size:14px;font-weight:700;color:var(--text);}
+  .mission-head span{font-size:11px;color:var(--text-faint);}
+  .mission-progress-lbl{font-size:10.5px;color:var(--text-faint);margin:9px 0 12px;}
+  .mission-reward{
+    display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;
+    background:var(--gold-bg);color:var(--gold-dim);font-weight:700;font-size:11.5px;
+  }
+  .mission-cta{
+    width:100%;padding:12px;border-radius:var(--radius-sm);border:none;margin-top:4px;
+    background:linear-gradient(135deg,var(--axa-red),var(--axa-red-dim));color:#fff;font-weight:700;font-size:13px;
+    cursor:pointer;font-family:inherit;box-shadow:0 8px 18px -6px rgba(255,23,33,0.45);transition:.15s;
+  }
+  .mission-cta:hover{transform:translateY(-1px);filter:brightness(1.03);}
+
+  /* ---- Wallet ---- */
+  .wallet-card{
+    position:relative;overflow:hidden;border-radius:var(--radius-md);
+    background:linear-gradient(150deg,var(--navy),#000066);color:#fff;padding:18px 18px 20px;margin-bottom:16px;
+  }
+  .wallet-card::after{
+    content:"";position:absolute;top:-30%;right:-15%;width:60%;height:160%;
+    background:radial-gradient(circle,rgba(232,163,36,0.28),transparent 65%);pointer-events:none;
+  }
+  .wallet-badge{
+    position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dim));display:flex;align-items:center;justify-content:center;
+    font-size:15px;box-shadow:0 6px 14px -5px rgba(232,163,36,0.6);
+  }
+  .wallet-label{font-size:10.5px;color:rgba(255,255,255,0.65);font-weight:600;text-transform:uppercase;letter-spacing:.05em;position:relative;z-index:1;}
+  .wallet-amount{font-family:'Fraunces',serif;font-size:27px;font-weight:700;margin-top:5px;position:relative;z-index:1;}
+
+  .activity-row{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 13px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--border);
+    margin-bottom:8px;
+  }
+  .activity-row.highlight{background:var(--gold-bg);border-color:rgba(232,163,36,0.35);}
+  .activity-title{font-size:12.5px;font-weight:600;color:var(--text);}
+  .activity-amt{font-family:'Space Mono',monospace;font-weight:700;font-size:12.5px;flex:none;}
+  .activity-amt.pos{color:var(--money);}
+  .activity-amt.neg{color:var(--axa-red);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="phone-screen" id="phoneScreen">
+    <div class="app-topbar" id="appTopbar">
+      <h2 id="appTopbarTitle">Title</h2>
+      <span class="appbar-pill" id="appTopbarPill"></span>
+    </div>
+    <div class="app-scroll">
+      <section class="page active" id="page-give">
+      <div class="modal">
+        <div class="give-subhead">
+          <div class="axa-logo">
+            <img src="img/image.png" alt="AXA">
+          </div>
+          <div class="head-tag">
+            <span class="head-tag-brand">✦ AXA FINANCIAL INDONESIA</span>
+            <span class="head-tag-sub">Building a culture of appreciation</span>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <label class="section-label">Appreciate a colleague</label>
+          <input type="text" id="toName" placeholder="Type a coworker's name...">
+        </div>
+
+        <!-- <div class="field-block" style="padding-bottom:14px;">
+          <label class="section-label">Send via</label>
+          <div class="segmented">
+            <button class="seg-btn active" data-where="chat">Chat</button>
+            <button class="seg-btn" data-where="channel">Team Channel</button>
+          </div>
+        </div> -->
+
+        <div class="perforation"><span class="dot"></span><span class="line"></span><span class="dot"></span></div>
+
+        <div class="field-block">
+          <label class="section-label">Category</label>
+          <div class="chiprow-wrap">
+            <div class="chiprow" id="titleRow">
+              <div class="chip active" data-title="Customer First" data-emoji=""> Customer First</div>
+              <div class="chip" data-title="Integrity" data-emoji=""> Integrity</div>
+              <div class="chip" data-title="Courage" data-emoji=""> Courage</div>
+              <div class="chip" data-title="One AXA" data-emoji=""> One AXA</div>
+            </div>
+            <div class="chevron">›</div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <label class="section-label">Message</label>
+          <textarea id="noteInput" maxlength="500" placeholder="Write why they deserve this..."></textarea>
+          <div class="charcount"><span id="charCount">000</span>/500</div>
+        </div>
+
+        <div class="field-block">
+          <label class="section-label">Stickers</label>
+          <div class="sticker-row" id="stickerRow">
+            <div class="sticker" data-s="🎊">🎊</div>
+            <div class="sticker" data-s="🔥">🔥</div>
+            <div class="sticker" data-s="💯">💯</div>
+            <div class="sticker" data-s="🙌">🙌</div>
+            <div class="sticker" data-s="⭐">⭐</div>
+            <div class="sticker" data-s="🚀">🚀</div>
+            <div class="sticker" data-s="👏">👏</div>
+            <div class="sticker" data-s="😄">😄</div>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <label class="section-label">Photo</label>
+          <div class="photo-zone" id="photoZone">
+            <div class="photo-icon" id="photoIconWrap">🖼️</div>
+            <div class="photo-text" id="photoText">
+              <strong>Add a photo</strong>
+              <span>PNG or JPG, max 10MB</span>
+            </div>
+          </div>
+          <input type="file" accept="image/*" class="hidden-input" id="photoInput">
+        </div>
+
+        <div class="field-block">
+          <label class="section-label">Envelope</label>
+          <div class="envelope-outer">
+            <div class="money-box" id="moneyBox">
+              <div class="envelope-flap"></div>
+              <div class="wax-seal" id="waxSeal">💌</div>
+              <div class="money-top">
+                <div class="money-title">
+                  <span class="label">Include cash<small>from your wallet</small></span>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="moneyToggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="money-body" id="moneyBody">
+                <div class="balance-row">Your balance <b id="balanceLabel">145 Point</b></div>
+                <div class="amount-input-wrap">
+                  <span class="amount-prefix"></span>
+                  <input type="text" inputmode="numeric" class="amount-input" id="amountInput" placeholder="0">
+                </div>
+                <div class="quick-amounts">
+                  <button class="quick-amt" data-amt="10">10 Point</button>
+                  <button class="quick-amt" data-amt="25">25 Point</button>
+                  <button class="quick-amt" data-amt="50">50 Point</button>
+                  <button class="quick-amt" data-amt="100">100 Point</button>
+                </div>
+                <div class="money-error" id="moneyError">Not enough balance.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="perforation"><span class="dot"></span><span class="line"></span><span class="dot"></span></div>
+
+        <div class="ticket-wrap">
+          <div class="ticket-outer-label">
+            <label class="section-label">Preview</label>
+            <span class="ticket-hint">— what they'll get</span>
+          </div>
+          <div class="ticket" id="ticketCard">
+            <div class="ticket-vignette"></div>
+            <div class="ticket-eyebrow">
+              <span class="brand"><span class="swoosh"></span> WE CARE HEROES</span>
+              <span id="ticketDate">—</span>
+            </div>
+            <div class="ticket-top">
+              <div class="ticket-from-to">
+                <strong>For <span id="previewName">someone</span></strong>
+                <span id="previewWhere">Sent via Chat</span>
+              </div>
+              <div class="ticket-badges">
+                <div class="ticket-ribbon" id="ticketRibbon">★</div>
+                <div class="ticket-stamp" id="previewStamp">🎁</div>
+              </div>
+            </div>
+            <div class="ticket-title-line"><span id="previewEmoji">🏆</span><span id="previewTitle">Awesome</span></div>
+            <div class="ticket-note" id="previewNote" style="display:none;"></div>
+            <div class="ticket-tags" id="previewAttach">
+              <span class="ticket-empty">No attachments yet — pick a sticker, photo, or cash above.</span>
+            </div>
+            <hr class="ticket-divider">
+            <div class="ticket-footer">
+              <div class="ticket-barcode" id="ticketBarcode"></div>
+              <div class="ticket-code">CODE<b id="ticketCode">WCH-000000</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-block">
+          <label class="section-label">Envelope Color</label>
+          <div class="swatches" id="swatches">
+            <div class="swatch selected" data-a="#00008f" data-b="#ff1721" data-name="Navy & Red" style="background:linear-gradient(135deg,#00008f,#ff1721)" title="Navy & Red"></div>
+            <div class="swatch" data-a="#ff1721" data-b="#c8101a" data-name="Crimson" style="background:linear-gradient(135deg,#ff1721,#c8101a)" title="Crimson"></div>
+            <div class="swatch" data-a="#00008f" data-b="#2f6fe0" data-name="Ocean Blue" style="background:linear-gradient(135deg,#00008f,#2f6fe0)" title="Ocean Blue"></div>
+            <div class="swatch" data-a="#111214" data-b="#00008f" data-name="Midnight" style="background:linear-gradient(135deg,#111214,#00008f)" title="Midnight"></div>
+            <div class="swatch" data-a="#2f6fe0" data-b="#00008f" data-name="Sky Fade" style="background:linear-gradient(135deg,#2f6fe0,#00008f)" title="Sky Fade"></div>
+            <div class="swatch" data-a="#ff1721" data-b="#2f6fe0" data-name="Fire & Ice" style="background:linear-gradient(135deg,#ff1721,#2f6fe0)" title="Fire & Ice"></div>
+            <div class="swatch" data-a="#c8101a" data-b="#00008f" data-name="Ruby Navy" style="background:linear-gradient(135deg,#c8101a,#00008f)" title="Ruby Navy"></div>
+            <div class="swatch" data-a="#111214" data-b="#ff1721" data-name="Eclipse" style="background:linear-gradient(135deg,#111214,#ff1721)" title="Eclipse"></div>
+            <div class="swatch" data-a="#e8a324" data-b="#b9800f" data-name="Gold Rush" style="background:linear-gradient(135deg,#e8a324,#b9800f)" title="Gold Rush"></div>
+            <div class="swatch" data-a="#159a5c" data-b="#0f6b40" data-name="Emerald" style="background:linear-gradient(135deg,#159a5c,#0f6b40)" title="Emerald"></div>
+            <div class="swatch" data-a="#7b5cff" data-b="#3c1a80" data-name="Royal Purple" style="background:linear-gradient(135deg,#7b5cff,#3c1a80)" title="Royal Purple"></div>
+            <div class="swatch" data-a="#ff6a3d" data-b="#ff1721" data-name="Sunset" style="background:linear-gradient(135deg,#ff6a3d,#ff1721)" title="Sunset"></div>
+            <div class="swatch" data-a="#0f9e8e" data-b="#00008f" data-name="Teal Wave" style="background:linear-gradient(135deg,#0f9e8e,#00008f)" title="Teal Wave"></div>
+            <div class="swatch" data-a="#ff6f91" data-b="#c8104a" data-name="Rose" style="background:linear-gradient(135deg,#ff6f91,#c8104a)" title="Rose"></div>
+            <div class="swatch" data-a="#2b2b30" data-b="#000000" data-name="Charcoal" style="background:linear-gradient(135deg,#2b2b30,#000000)" title="Charcoal"></div>
+            <div class="swatch" data-a="#e8a324" data-b="#159a5c" data-name="Harvest" style="background:linear-gradient(135deg,#e8a324,#159a5c)" title="Harvest"></div>
+          </div>
+          <div class="swatch-label"><span class="dot"></span><span id="swatchLabelText">Navy & Red</span></div>
+        </div>
+
+        <div class="footer">
+          <div class="helpful">
+            <span>Helpful?</span>
+            <button id="helpYes">Yes</button>
+            <button id="helpNo">No</button>
+          </div>
+          <div class="footer-actions">
+            <button class="btn" id="previewBtn">Preview</button>
+            <button class="btn primary" id="sendBtn">Send</button>
+          </div>
+        </div>
+      </div>
+      </section>
+
+      <!-- ===== Receive & Get Rewarded ===== -->
+      <section class="page" id="page-rewarded">
+        <div class="modal">
+          <div class="page-pad">
+            <div class="rewarded-hero" id="rewardedHero">
+              <div class="rewarded-star">⭐</div>
+              <h3>You've been appreciated!</h3>
+              <p>by <span id="rewardedFrom">Sarah K.</span> — <span id="rewardedCategory">Collaboration</span></p>
+              <div class="rewarded-points">⚡ +50 Points</div>
+            </div>
+            <div class="rewarded-quote">"Thanks for jumping in to help with the client deck last minute!"</div>
+            <button class="rewarded-cta" data-goto="give">View in We Care Heroes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Track Progress / My Impact ===== -->
+      <section class="page" id="page-impact">
+        <div class="modal">
+          <div class="page-pad">
+            <div class="streak-banner"><span class="flame">🔥</span> 5-day recognition streak!</div>
+
+            <div class="stat-grid">
+              <div class="stat-card given"><span class="num">12</span><span class="lbl">Given</span></div>
+              <div class="stat-card received"><span class="num">9</span><span class="lbl">Received</span></div>
+            </div>
+
+            <label class="section-label" style="margin-bottom:10px;">Badges earned</label>
+            <div class="badge-row">
+              <div class="badge-icon">⭐</div>
+              <div class="badge-icon">🏆</div>
+              <div class="badge-icon">🤝</div>
+              <div class="badge-icon">✦</div>
+            </div>
+
+            <label class="section-label" style="margin-bottom:9px;">Next mission progress</label>
+            <div class="progress-track"><div class="progress-fill" style="width:66%;"></div></div>
+            <div class="progress-caption">2 of 3 appreciations this week</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Department Leaderboard ===== -->
+      <section class="page" id="page-leaderboard">
+        <div class="modal">
+          <div class="page-pad">
+            <label class="section-label" style="margin-bottom:11px;">This month — Top departments</label>
+
+            <div class="leader-row top">
+              <div class="leader-rank gold">👑</div>
+              <div class="leader-dept">CEO & STAFF</div>
+              <div class="leader-pts">48</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">2</div>
+              <div class="leader-dept">OPERATION</div>
+              <div class="leader-pts">41</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">3</div>
+              <div class="leader-dept">FINANCE & HEALTH</div>
+              <div class="leader-pts">35</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">4</div>
+              <div class="leader-dept">IT</div>
+              <div class="leader-pts">27</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">5</div>
+              <div class="leader-dept">MARKETING</div>
+              <div class="leader-pts">22</div>
+            </div>
+            <label class="section-label" style="margin:20px 0 11px;">This month — Top people</label>
+
+            <div class="leader-row top">
+              <div class="leader-rank gold">👑</div>
+              <div class="leader-avatar" style="background:linear-gradient(135deg,#7b5cff,#4c2fc9);">AR</div>
+              <div class="leader-person">
+                <div class="leader-name">ADI RACHMADI</div>
+                <div class="leader-sub">CEO & STAFF</div>
+              </div>
+              <div class="leader-pts">31</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">2</div>
+              <div class="leader-avatar" style="background:linear-gradient(135deg,var(--ice),var(--ice-dim));">DK</div>
+              <div class="leader-person">
+                <div class="leader-name">DHANU KOENTORO DJATI</div>
+                <div class="leader-sub">CEO & STAFF</div>
+              </div>
+              <div class="leader-pts">27</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">3</div>
+              <div class="leader-avatar" style="background:linear-gradient(135deg,var(--money),#0f6b40);">IA</div>
+              <div class="leader-person">
+                <div class="leader-name">IRAWAN AHMAD</div>
+                <div class="leader-sub">OPERATION</div>
+              </div>
+              <div class="leader-pts">24</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">4</div>
+              <div class="leader-avatar" style="background:linear-gradient(135deg,var(--navy),#000066);">TL</div>
+              <div class="leader-person">
+                <div class="leader-name">TYRONE LEE</div>
+                <div class="leader-sub">FINANCE & HEALTH</div>
+              </div>
+              <div class="leader-pts">19</div>
+            </div>
+            <div class="leader-row">
+              <div class="leader-rank">5</div>
+              <div class="leader-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold-dim));">PD</div>
+              <div class="leader-person">
+                <div class="leader-name">PANDU DEWANDI</div>
+                <div class="leader-sub">IT</div>
+              </div>
+              <div class="leader-pts">16</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Mission Integration ===== -->
+      <section class="page" id="page-missions">
+        <div class="modal">
+          <div class="page-pad">
+            <label class="section-label" style="margin-bottom:11px;">Active missions</label>
+
+            <div class="mission-card">
+              <div class="mission-head">
+                <div class="mission-icon">⭐</div>
+                <div>
+                  <strong>Appreciate a Colleague</strong>
+                  <span>This week</span>
+                </div>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:66%;"></div></div>
+              <div class="mission-progress-lbl">2 / 3 completed</div>
+              <div class="mission-reward">🎁 Reward: +Rp25,000 InTouch</div>
+              <button class="mission-cta" data-goto="give">Continue Mission</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== InTouch Wallet ===== -->
+      <section class="page" id="page-wallet">
+        <div class="modal">
+          <div class="page-pad">
+            <div class="wallet-card">
+              <div class="wallet-badge">⭐</div>
+              <div class="wallet-label">Current balance</div>
+              <div class="wallet-amount">145 Point</div><div class="wallet-label" style="margin-top:3px;">1 Point = Rp1,000</div>
+            </div>
+
+            <label class="section-label" style="margin-bottom:11px;">Recent activity</label>
+            <div class="activity-row highlight">
+              <span class="activity-title">We Care Heroes Mission</span>
+              <span class="activity-amt pos">+25 Point</span>
+            </div>
+            <div class="activity-row">
+              <span class="activity-title">Wellness Check-in Streak</span>
+              <span class="activity-amt pos">+10 Point</span>
+            </div>
+            <div class="activity-row">
+              <span class="activity-title">Redeemed — Coffee Voucher</span>
+              <span class="activity-amt neg">-15 Point</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <nav class="tabbar" id="tabbar">
+      <button class="tab-btn active" data-page="give"><span class="tab-icon">🎁</span><span class="tab-label">Give</span></button>
+      <button class="tab-btn" data-page="rewarded"><span class="tab-icon">🎉</span><span class="tab-label">Rewarded</span></button>
+      <button class="tab-btn" data-page="impact"><span class="tab-icon">📈</span><span class="tab-label">Impact</span></button>
+      <button class="tab-btn" data-page="leaderboard"><span class="tab-icon">🏅</span><span class="tab-label">Ranks</span></button>
+      <button class="tab-btn" data-page="missions"><span class="tab-icon">🎯</span><span class="tab-label">Missions</span></button>
+      <button class="tab-btn" data-page="wallet"><span class="tab-icon">💳</span><span class="tab-label">Wallet</span></button>
+    </nav>
+
+    <div class="toast" id="toast"><span class="dot"></span><span id="toastText">Sent!</span></div>
+  </div>
+</div>
+
+<script>
+const WALLET_BALANCE = 145;
+let state = { title:'Awesome', emoji:'🏆', stickers:[], photoDataUrl:null, moneyOn:false, amount:0, where:'chat' };
+
+function fmtMoney(n){ return n.toLocaleString('en-US', {minimumFractionDigits: n % 1 !== 0 ? 2 : 0}) + ' Point'; }
+
+/* live status bar clock (no-op now that the phone status bar was removed) */
+(function tickClock(){
+  const el = document.getElementById('statusTime');
+  if(!el) return;
+  function update(){
+    const d = new Date();
+    let h = d.getHours(); const m = d.getMinutes();
+    el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+  }
+  update(); setInterval(update, 15000);
+})();
+
+/* ticket date + code, generated once */
+const ticketDate = document.getElementById('ticketDate');
+const ticketCode = document.getElementById('ticketCode');
+const ticketBarcode = document.getElementById('ticketBarcode');
+(function initTicketMeta(){
+  const d = new Date();
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  ticketDate.textContent = `${String(d.getDate()).padStart(2,'0')} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  const rand = Math.floor(100000 + Math.random()*899999);
+  ticketCode.textContent = 'WCH-' + rand;
+  let bars = '';
+  for(let i=0;i<26;i++){
+    const w = [2,2,3,4][Math.floor(Math.random()*4)];
+    const h = 9 + Math.floor(Math.random()*15);
+    bars += `<span style="width:${w}px;height:${h}px;"></span>`;
+  }
+  ticketBarcode.innerHTML = bars;
+})();
+
+/* title chips */
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    state.title = chip.dataset.title;
+    state.emoji = chip.dataset.emoji;
+    renderPreview();
+  });
+});
+
+/* where */
+document.querySelectorAll('.seg-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.seg-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    state.where = b.dataset.where;
+    renderPreview();
+  });
+});
+
+/* name + note */
+const toName = document.getElementById('toName');
+toName.addEventListener('input', renderPreview);
+const noteInput = document.getElementById('noteInput');
+const charCount = document.getElementById('charCount');
+noteInput.addEventListener('input', ()=>{
+  charCount.textContent = String(noteInput.value.length).padStart(3,'0');
+  renderPreview();
+});
+
+/* stickers — up to 2 can be selected at once */
+const MAX_STICKERS = 2;
+document.querySelectorAll('.sticker').forEach(s=>{
+  s.addEventListener('click', ()=>{
+    const isActive = s.classList.contains('active');
+    if(isActive){
+      s.classList.remove('active');
+      state.stickers = state.stickers.filter(x=> x !== s.dataset.s);
+    } else {
+      if(state.stickers.length >= MAX_STICKERS) return; // already picked 2
+      s.classList.add('active');
+      s.classList.add('pop');
+      setTimeout(()=>s.classList.remove('pop'), 400);
+      state.stickers.push(s.dataset.s);
+    }
+    renderPreview();
+  });
+});
+
+/* photo */
+const photoZone = document.getElementById('photoZone');
+const photoInput = document.getElementById('photoInput');
+const photoText = document.getElementById('photoText');
+photoZone.addEventListener('click', (e)=>{ if(e.target.classList.contains('photo-remove')) return; photoInput.click(); });
+photoInput.addEventListener('change', ()=>{
+  const file = photoInput.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    state.photoDataUrl = e.target.result;
+    photoZone.classList.add('has-image');
+    document.getElementById('photoIconWrap').outerHTML = `<img src="${state.photoDataUrl}" class="photo-preview" id="photoIconWrap"/>`;
+    photoText.innerHTML = `<strong>${file.name.length>18? file.name.slice(0,16)+'…':file.name}</strong><span>${(file.size/1024).toFixed(0)} KB</span>`;
+    if(!document.querySelector('.photo-remove')){
+      const rm = document.createElement('button');
+      rm.className='photo-remove'; rm.textContent='Remove';
+      rm.addEventListener('click',(ev)=>{
+        ev.stopPropagation();
+        state.photoDataUrl = null; photoInput.value='';
+        photoZone.classList.remove('has-image');
+        document.getElementById('photoIconWrap').outerHTML = '<div class="photo-icon" id="photoIconWrap">🖼️</div>';
+        photoText.innerHTML = '<strong>Add a photo</strong><span>PNG or JPG, max 10MB</span>';
+        rm.remove(); renderPreview();
+      });
+      photoZone.appendChild(rm);
+    }
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+});
+
+/* money / envelope */
+const moneyToggle = document.getElementById('moneyToggle');
+const moneyBox = document.getElementById('moneyBox');
+const moneyBody = document.getElementById('moneyBody');
+const amountInput = document.getElementById('amountInput');
+const balanceLabel = document.getElementById('balanceLabel');
+const moneyError = document.getElementById('moneyError');
+balanceLabel.textContent = fmtMoney(WALLET_BALANCE);
+
+moneyToggle.addEventListener('change', ()=>{
+  state.moneyOn = moneyToggle.checked;
+  moneyBox.classList.toggle('open', state.moneyOn);
+  moneyBody.classList.toggle('open', state.moneyOn);
+  if(!state.moneyOn){ state.amount = 0; amountInput.value=''; moneyError.style.display='none'; balanceLabel.textContent = fmtMoney(WALLET_BALANCE); balanceLabel.style.color='var(--text)'; }
+  renderPreview();
+});
+
+function handleAmountChange(raw){
+  const digits = raw.replace(/[^0-9]/g,'');
+  const val = digits ? parseInt(digits,10) : 0;
+  amountInput.value = digits ? Number(digits).toLocaleString('en-US') : '';
+  state.amount = val;
+  const remaining = WALLET_BALANCE - val;
+  if(val > WALLET_BALANCE){
+    moneyError.style.display='block';
+    balanceLabel.textContent = fmtMoney(WALLET_BALANCE);
+    balanceLabel.style.color = 'var(--axa-red)';
+  } else {
+    moneyError.style.display='none';
+    if(val>0){ balanceLabel.textContent = fmtMoney(Math.max(remaining,0)) + ' left'; balanceLabel.style.color='var(--money)'; }
+    else { balanceLabel.textContent = fmtMoney(WALLET_BALANCE); balanceLabel.style.color='var(--text)'; }
+  }
+  renderPreview();
+}
+amountInput.addEventListener('input', ()=> handleAmountChange(amountInput.value));
+document.querySelectorAll('.quick-amt').forEach(qb=>{ qb.addEventListener('click', ()=> handleAmountChange(qb.dataset.amt)); });
+
+/* swatches — actually drive the ticket/envelope accent color */
+const swatchLabelText = document.getElementById('swatchLabelText');
+const ticketCardEl = document.getElementById('ticketCard');
+document.querySelectorAll('.swatch').forEach(sw=>{
+  sw.addEventListener('click', ()=>{
+    document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('selected'));
+    sw.classList.add('selected');
+    const a = sw.dataset.a, b = sw.dataset.b, name = sw.dataset.name;
+    document.documentElement.style.setProperty('--accent-a', a);
+    document.documentElement.style.setProperty('--accent-b', b);
+    swatchLabelText.textContent = name;
+    ticketCardEl.classList.add('ticket-flash');
+    ticketCardEl.style.transform = 'scale(1.02)';
+    setTimeout(()=>{
+      ticketCardEl.classList.remove('ticket-flash');
+      ticketCardEl.style.transform = '';
+    }, 500);
+  });
+});
+
+/* helpful */
+document.getElementById('helpYes').addEventListener('click', function(){ this.classList.add('picked'); document.getElementById('helpNo').classList.remove('picked'); });
+document.getElementById('helpNo').addEventListener('click', function(){ this.classList.add('picked'); document.getElementById('helpYes').classList.remove('picked'); });
+
+/* preview render */
+function renderPreview(){
+  document.getElementById('previewName').textContent = toName.value.trim() || 'someone';
+  document.getElementById('previewWhere').textContent = state.where === 'chat' ? 'Sent via Chat' : 'Sent via Team Channel';
+  document.getElementById('previewTitle').textContent = state.title;
+  document.getElementById('previewEmoji').textContent = state.emoji;
+
+  const stampEl = document.getElementById('previewStamp');
+  const newStamp = '🎁';
+  if(stampEl.textContent !== newStamp){
+    stampEl.textContent = newStamp;
+    stampEl.classList.add('pop');
+    setTimeout(()=>stampEl.classList.remove('pop'), 400);
+  }
+
+  const noteEl = document.getElementById('previewNote');
+  if(noteInput.value.trim()){ noteEl.style.display='block'; noteEl.textContent = noteInput.value.trim(); }
+  else { noteEl.style.display='none'; }
+
+  const attach = document.getElementById('previewAttach');
+  attach.innerHTML=''; let any=false;
+
+  state.stickers.forEach(sticker=>{
+    any=true;
+    const tag = document.createElement('span'); tag.className='ticket-tag accented'; tag.textContent = sticker + ' Sticker'; attach.appendChild(tag);
+  });
+  if(state.photoDataUrl){
+    any=true;
+    const img = document.createElement('img'); img.className='ticket-photo'; img.src = state.photoDataUrl; attach.appendChild(img);
+  }
+  if(state.moneyOn && state.amount>0 && state.amount<=WALLET_BALANCE){
+    any=true;
+    const tag = document.createElement('span'); tag.className='ticket-tag money'; tag.textContent = '⭐' + fmtMoney(state.amount); attach.appendChild(tag);
+  }
+  if(!any){
+    const empty = document.createElement('span'); empty.className='ticket-empty';
+    empty.textContent='No attachments yet — pick a sticker, photo, or cash above.';
+    attach.appendChild(empty);
+  }
+}
+
+/* footer actions */
+const sendBtn = document.getElementById('sendBtn');
+const toast = document.getElementById('toast');
+const toastText = document.getElementById('toastText');
+function showToast(msg){
+  toast.classList.remove('show');
+  void toast.offsetWidth;
+  toastText.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(()=> toast.classList.remove('show'), 2600);
+}
+
+document.getElementById('previewBtn').addEventListener('click', ()=>{
+  showToast('Showing preview above ✨');
+  const ticket = document.getElementById('ticketCard');
+  ticket.classList.add('ticket-flash');
+  ticket.style.transform='scale(1.02)';
+  setTimeout(()=>{ ticket.classList.remove('ticket-flash'); ticket.style.transform=''; }, 700);
+});
+
+/* confetti burst — confined to the phone screen */
+function burstConfetti(){
+  const colors = ['#ff1721','#00008f','#2f6fe0','#1c1c1e'];
+  const screen = document.getElementById('phoneScreen');
+  const rect = screen.getBoundingClientRect();
+  const originX = rect.width/2;
+  const originY = rect.height - 70;
+  for(let i=0;i<28;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.width = (5 + Math.random()*4) + 'px';
+    piece.style.height = (5 + Math.random()*4) + 'px';
+    piece.style.left = originX + 'px';
+    piece.style.top = originY + 'px';
+    screen.appendChild(piece);
+
+    const angle = (Math.random()*Math.PI) + Math.PI;
+    const distance = 70 + Math.random()*140;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance - 60;
+    const rot = (Math.random()*720) - 360;
+    const duration = 800 + Math.random()*600;
+
+    piece.animate([
+      { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx*0.6}px, ${dy}px) rotate(${rot*0.6}deg)`, opacity: 1, offset:.55 },
+      { transform: `translate(${dx}px, ${dy+220}px) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration, easing:'cubic-bezier(.2,.7,.3,1)' });
+
+    setTimeout(()=> piece.remove(), duration+50);
+  }
+}
+
+sendBtn.addEventListener('click', ()=>{
+  if(!toName.value.trim()){ toName.focus(); showToast('Add a recipient first'); return; }
+  if(state.moneyOn && state.amount > WALLET_BALANCE){ showToast('Not enough balance'); return; }
+  let msg = 'Sent to ' + toName.value.trim();
+  if(state.moneyOn && state.amount>0) msg += ' + ' + fmtMoney(state.amount);
+  showToast(msg + ' 🎉');
+  burstConfetti();
+});
+
+renderPreview();
+
+/* ===== tab navigation across pages ===== */
+const PAGE_CONFIG = {
+  give:        { topbar:true, title:'We Care Heroes', pill:null },
+  rewarded:    { topbar:true, title:'Notification', pill:null },
+  impact:      { topbar:true, title:'My Impact', pill:'Lv. 4' },
+  leaderboard: { topbar:true, title:'Leaderboard', pill:'live' },
+  missions:    { topbar:true, title:'Missions', pill:'2 Active' },
+  wallet:      { topbar:true, title:'InTouch Wallet', pill:null },
+};
+
+const appTopbar = document.getElementById('appTopbar');
+const appTopbarTitle = document.getElementById('appTopbarTitle');
+const appTopbarPill = document.getElementById('appTopbarPill');
+const tabBtns = document.querySelectorAll('.tab-btn');
+const pages = document.querySelectorAll('.page');
+
+function goToPage(name){
+  if(!PAGE_CONFIG[name]) return;
+  pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
+  tabBtns.forEach(b => b.classList.toggle('active', b.dataset.page === name));
+
+  const cfg = PAGE_CONFIG[name];
+  if(cfg.topbar){
+    appTopbar.classList.add('show');
+    appTopbarTitle.textContent = cfg.title;
+    if(cfg.pill === 'live'){
+      appTopbarPill.className = 'appbar-pill live';
+      appTopbarPill.innerHTML = '<span class="live-dot"></span>Live';
+    } else if(cfg.pill){
+      appTopbarPill.className = 'appbar-pill';
+      appTopbarPill.style.display = '';
+      appTopbarPill.textContent = cfg.pill;
+    } else {
+      appTopbarPill.style.display = 'none';
+    }
+  } else {
+    appTopbar.classList.remove('show');
+  }
+
+  document.getElementById('phoneScreen').scrollTop = 0;
+  const scrollArea = document.querySelector('.app-scroll');
+  if(scrollArea) scrollArea.scrollTop = 0;
+
+  if(name === 'rewarded'){
+    setTimeout(()=> burstConfettiIn(document.getElementById('rewardedHero')), 150);
+  }
+}
+
+tabBtns.forEach(btn => btn.addEventListener('click', ()=> goToPage(btn.dataset.page)));
+document.querySelectorAll('[data-goto]').forEach(el=>{
+  el.addEventListener('click', ()=> goToPage(el.dataset.goto));
+});
+
+/* small confetti burst confined to a given element (reuses the same visual language as the send-confetti) */
+function burstConfettiIn(container){
+  if(!container) return;
+  const colors = ['#e8a324','#ff1721','#2f6fe0','#ffffff'];
+  const rect = container.getBoundingClientRect();
+  const parentRect = document.getElementById('phoneScreen').getBoundingClientRect();
+  const originX = rect.left - parentRect.left + rect.width/2;
+  const originY = rect.top - parentRect.top + rect.height*0.35;
+  const screen = document.getElementById('phoneScreen');
+  for(let i=0;i<20;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.width = (5 + Math.random()*4) + 'px';
+    piece.style.height = (5 + Math.random()*4) + 'px';
+    piece.style.left = originX + 'px';
+    piece.style.top = originY + 'px';
+    screen.appendChild(piece);
+
+    const angle = Math.random()*Math.PI*2;
+    const distance = 40 + Math.random()*90;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance - 40;
+    const rot = (Math.random()*720) - 360;
+    const duration = 700 + Math.random()*500;
+
+    piece.animate([
+      { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${dx*0.7}px, ${dy}px) rotate(${rot*0.6}deg)`, opacity: 1, offset:.55 },
+      { transform: `translate(${dx}px, ${dy+160}px) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration, easing:'cubic-bezier(.2,.7,.3,1)' });
+
+    setTimeout(()=> piece.remove(), duration+50);
+  }
+}
+
+/* set up the top bar for the initially active tab (Give) */
+appTopbar.classList.add('show');
+appTopbarTitle.textContent = PAGE_CONFIG.give.title;
+appTopbarPill.style.display = 'none';
+</script>
+
+</body>
+</html>
